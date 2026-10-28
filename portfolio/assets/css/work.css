@@ -1,0 +1,288 @@
+/* My Work. Default = a static grid (works without JS); work.js adds .is-pinned on wide
+   screens to switch to the reference's pinned horizontal gallery. */
+
+.work-section {
+  --work-img-h: 350px;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  background-color: var(--bg);
+}
+
+.work-section h2 {
+  margin: 100px 0 60px;
+  font-size: 70px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.work-section h2 > span { color: var(--accent); }
+
+.work-container {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.work-flex {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.work-flex::before,
+.work-flex::after {
+  content: "";
+  width: 50000vw;
+  height: 1px;
+  background-color: var(--line);
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.work-flex::after { top: 100%; }
+
+.work-box {
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+  gap: 40px;
+  justify-content: flex-start;
+}
+
+.work-box:nth-child(2n + 1) { border-right: 1px solid var(--line); }
+.work-flex .work-box:nth-child(2n) { flex-direction: column-reverse; justify-content: flex-end; }
+
+.work-title {
+  justify-content: space-between;
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.work-title > div { text-align: right; }
+
+.work-num {
+  font-size: 50px;
+  line-height: 50px;
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.work-info h3,
+.work-info h4 {
+  font-size: 26px;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.work-info p {
+  font-weight: 200;
+  color: var(--muted);
+  margin: 3px 0 0;
+}
+
+.work-info > p { width: 90%; }
+
+.work-image {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+/* The frame gets a definite size from the image ratio, so nothing shifts when it loads. */
+.work-image-in {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: min(100%, calc(var(--work-img-h) * var(--ar, 1.6)));
+}
+
+.work-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--ar, 1.6);
+  object-fit: cover;
+  background: #ffffff08;
+}
+
+.work-image-in:hover,
+.work-image-in:focus-visible { color: inherit; }
+
+.work-link {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: var(--bg);
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px #ffffff80, inset 0 0 10px #393939;
+  transition: opacity 0.3s;
+  opacity: 0;
+  z-index: 2;
+}
+
+.work-link svg {
+  width: 25px;
+  height: 25px;
+}
+
+.work-image-in:hover .work-link,
+.work-image-in:focus-visible .work-link { opacity: 1; }
+
+@media (hover: none) {
+  .work-link { opacity: 1; }
+}
+
+/* The designed title card (.work-card) is in title-card.css (shared with works.html). */
+
+/* Last box: "see more" call to action. */
+.work-box-cta {
+  align-items: center;
+  justify-content: center;
+}
+
+.see-all-works {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.see-all-works h3 {
+  font-size: 32px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+}
+
+.see-all-works p {
+  font-size: 16px;
+  color: #fff9;
+  max-width: 250px;
+  margin: 0;
+}
+
+.see-all-btn {
+  display: inline-block;
+  padding: 15px 35px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000;
+  background: var(--accent);
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.see-all-btn:hover,
+.see-all-btn:focus-visible {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px #c2a4ff66;
+  color: #000;
+}
+
+/* ---------- Pinned horizontal gallery (work.js, > 768px) ---------- */
+.work-section.is-pinned {
+  height: 100vh;
+  will-change: transform;
+}
+
+/* line-height 1.5 as in the reference (60px title, 90px line box above the gallery) */
+.work-section.is-pinned h2 { margin: 100px 0 0.83em; line-height: 1.5; }
+
+.work-section.is-pinned .work-flex {
+  flex-wrap: nowrap;
+  height: 100%;
+  margin-left: -80px;
+  padding-right: 120px;
+}
+
+.work-section.is-pinned .work-box {
+  padding: 80px;
+  width: 600px;
+  gap: 50px;
+  border-bottom: none;
+  border-right: 1px solid var(--line);
+}
+
+.work-section.is-pinned .work-box-cta { border-right: none; }
+.work-section.is-pinned .work-flex .work-box:nth-child(2n) { justify-content: flex-start; }
+
+@media only screen and (max-height: 900px) {
+  .work-section { --work-img-h: 250px; }
+  .work-section.is-pinned .work-box { padding-top: 40px; padding-bottom: 40px; }
+  .work-section.is-pinned h2 { font-size: 60px; margin-bottom: 30px; margin-top: 70px; }
+}
+
+@media only screen and (max-width: 1400px) {
+  .work-num { font-size: 35px; line-height: 40px; }
+  .work-info p { font-size: 13px; }
+  .work-info h3,
+  .work-info h4 { font-size: 15px; }
+  .work-section h2 { font-size: 50px; }
+  .work-section.is-pinned .work-box { width: 350px; padding-left: 30px; padding-right: 30px; }
+  .work-section.is-pinned .work-flex { margin-left: -30px; padding-right: 45px; }
+  .work-card-title { font-size: 26px; }
+}
+
+@media only screen and (max-height: 650px) {
+  .work-section { --work-img-h: 200px; }
+  .work-section.is-pinned h2 { font-size: 40px; margin-bottom: 20px; }
+  .work-section.is-pinned .work-box { gap: 20px; }
+}
+
+@media only screen and (max-width: 1025px) {
+  .work-section.is-pinned .work-flex { height: auto; }
+}
+
+/* ---------- Phones: plain vertical list ---------- */
+@media only screen and (max-width: 768px) {
+  .work-section { --work-img-h: 200px; }
+  .work-flex { flex-direction: column; flex-wrap: nowrap; }
+  .work-box {
+    width: 100%;
+    max-width: 100%;
+    padding: 30px 15px;
+    border-right: none !important;
+    border-bottom: 1px solid var(--line);
+    gap: 20px;
+  }
+  .work-flex .work-box:nth-child(2n) { flex-direction: column; }
+  .work-section h2 { font-size: 36px; margin-top: 50px; margin-bottom: 20px; }
+  .work-num { font-size: 30px; line-height: 30px; }
+  .work-info h3,
+  .work-info h4 { font-size: 18px; }
+  .work-box-cta { padding: 40px 20px; border-bottom: none; }
+  .see-all-works h3 { font-size: 24px; }
+  .see-all-works p { font-size: 14px; }
+  .work-card { padding: 20px; }
+  .work-card-title { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-link,
+  .see-all-btn { transition: none; }
+}
+
+html.reduced-motion .work-link,
+html.reduced-motion .see-all-btn { transition: none; }

@@ -1,0 +1,16 @@
+// The portfolio on Cloudflare: an assets-only Worker serving portfolio/ at https://skova.dev.
+// Deploy from the SKOVA folder:  npx wrangler@4.147.0 deploy --config cloudflare/wrangler.jsonc
+// Headers come from portfolio/_headers; files listed in portfolio/.assetsignore are not uploaded.
+{
+  "name": "skova",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "../portfolio",
+    // /works serves works.html (like Vercel's cleanUrls); unknown paths get 404.html (status 404)
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "routes": [{ "pattern": "skova.dev", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false
+}

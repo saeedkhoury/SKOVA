@@ -1,0 +1,462 @@
+/* The All Works page (works.html, render/works-page.js). Sizes follow the reference page
+   (review/v2-works-page-spec.md): 3 columns on wide screens, 2 on tablets, 1 on phones.
+   The column breakpoints are also in COLUMNS in render/works-page.js (first-row pictures load at once). */
+
+html {
+  scrollbar-gutter: stable; /* nothing shifts sideways when the lightbox locks the scroll */
+}
+
+html.has-lightbox {
+  overflow: hidden;
+}
+
+.works-page {
+  --works-surface: rgb(255 255 255 / 0.03);
+  --works-line: rgb(255 255 255 / 0.1);
+  --works-glow: rgb(194 164 255 / 0.15);
+  --works-tint: rgb(194 164 255 / 0.12);
+  --works-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --works-speed: 0.3s;
+  box-sizing: border-box;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 80px 40px 0;
+}
+
+/* ---------- Header ---------- */
+.works-header {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.works-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 30px;
+  padding: 10px 20px;
+  border: 1px solid var(--accent);
+  border-radius: 30px;
+  color: var(--accent);
+  font-size: 16px;
+  line-height: 24px;
+  transition: background-color var(--works-speed), color var(--works-speed);
+}
+
+.works-back:hover,
+.works-back:focus-visible {
+  background-color: var(--works-tint);
+  color: var(--accent-hover);
+}
+
+.works-back:focus-visible { border-radius: 30px; }
+
+.works-back-arrow { transition: transform var(--works-speed) var(--works-ease); }
+.works-back:hover .works-back-arrow { transform: translateX(-3px); }
+
+.works-header h1 {
+  margin: 0.67em 0 15px;
+  color: #fff;
+  font-size: 70px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.works-header h1 > span { color: var(--accent); }
+
+.works-intro {
+  margin: 18px 0;
+  color: rgb(255 255 255 / 0.6);
+  font-size: 18px;
+  line-height: 27px;
+}
+
+/* ---------- Grid and cards ---------- */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.works-item {
+  display: flex;
+  min-width: 0;
+}
+
+.works-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--works-line);
+  border-radius: 15px;
+  background: var(--works-surface);
+  transition:
+    transform var(--works-speed) var(--works-ease),
+    border-color var(--works-speed),
+    box-shadow var(--works-speed);
+}
+
+.works-card:focus-within { border-color: var(--accent); }
+
+@media (hover: hover) {
+  .works-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent);
+    box-shadow: 0 20px 40px var(--works-glow);
+  }
+
+  .works-card:hover .works-shot img { transform: scale(1.05); }
+  .works-shot:hover .works-overlay { opacity: 1; }
+}
+
+/* The picture area keeps its 1600 x 816 box before the picture loads (no layout shift). */
+.works-media {
+  position: relative;
+  aspect-ratio: 1600 / 816;
+  overflow: hidden;
+  background: rgb(255 255 255 / 0.04);
+}
+
+.works-shot {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.works-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--works-speed) var(--works-ease);
+}
+
+/* Keyboard focus: the ring is drawn on the overlay, the top layer of the picture
+   (an outline on the button itself would sit under the overlay). */
+.works-shot:focus-visible { outline: none; }
+
+.works-shot:focus-visible .works-overlay {
+  opacity: 1;
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+  border-radius: 14px 14px 4px 4px;
+}
+
+.works-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 0.4);
+  opacity: 0;
+  transition: opacity var(--works-speed);
+}
+
+.works-view {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgb(194 164 255 / 0.2);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+.works-view svg {
+  width: 15px;
+  height: 15px;
+}
+
+.works-num {
+  position: absolute;
+  top: 15px; /* 16px from the card's outer edge, as in the reference (the card border is 1px) */
+  left: 15px;
+  z-index: 2;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgb(0 0 0 / 0.5);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+/* The designed title card (title-card.css) fills the picture area when a picture is missing. */
+.works-media .work-card {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  aspect-ratio: auto;
+  padding: 24px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.works-media .work-card-title { font-size: 30px; }
+
+/* Flex column: margins do not collapse, so each one is the visible gap of the reference. */
+.works-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 25px 25px 14px;
+}
+
+.works-name {
+  margin: 20px 0 0;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+}
+
+.works-cat {
+  margin: 14px 0 0;
+  color: var(--accent);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.works-summary {
+  margin: 14px 0 0;
+  color: rgb(255 255 255 / 0.75);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.works-stack {
+  margin: 15px 0 8px;
+  color: rgb(255 255 255 / 0.5);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* The project link sits at the bottom, so the links of one row line up. */
+.works-visit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  margin-top: auto;
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 500;
+  transition: color var(--works-speed);
+}
+
+.works-visit svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--works-speed) var(--works-ease);
+}
+
+.works-visit:hover,
+.works-visit:focus-visible { color: var(--accent-hover); }
+
+.works-visit:hover svg,
+.works-visit:focus-visible svg { transform: translate(2px, -2px); }
+
+/* ---------- Entrance (works/entrance.js; never with reduced motion) ---------- */
+.works-item.will-enter {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+.works-item.will-enter.is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s var(--works-ease) var(--enter-delay, 0ms),
+    transform 0.7s var(--works-ease) var(--enter-delay, 0ms);
+}
+
+/* ---------- Footer ---------- */
+.works-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: 100px;
+  padding: 28px 0 40px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.works-footer:empty { display: none; }
+.works-footer p { margin: 0; }
+.works-footer-credit span { color: var(--text); }
+
+/* ---------- Lightbox (works/lightbox.js) ---------- */
+.lightbox {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  overflow: hidden;
+}
+
+.lightbox[open] { display: block; }
+
+.lightbox::backdrop { background: rgb(0 0 0 / 0.9); }
+
+.lightbox-stage {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 72px 24px 32px;
+}
+
+/* Viewport units: the stage's own size is not a reliable base for percentages here. */
+.lightbox-img {
+  --lightbox-gutter: 48px;
+  --lightbox-chrome: 104px; /* top room for the close button + bottom padding */
+  width: auto;
+  height: auto;
+  max-width: min(calc(100vw - var(--lightbox-gutter)), 1600px);
+  max-height: calc(100vh - var(--lightbox-chrome));
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.6);
+  cursor: default;
+}
+
+@supports (height: 100dvh) {
+  .lightbox-img { max-height: calc(100dvh - var(--lightbox-chrome)); }
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color var(--works-speed, 0.3s);
+}
+
+.lightbox-close svg {
+  width: 26px;
+  height: 26px;
+}
+
+.lightbox-close:hover { background-color: rgb(255 255 255 / 0.12); }
+.lightbox-close:focus-visible { border-radius: 50%; outline-offset: 2px; }
+
+.lightbox[open] .lightbox-img { animation: lightbox-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.lightbox[open]::backdrop { animation: lightbox-fade 0.3s ease both; }
+
+@keyframes lightbox-in {
+  from { opacity: 0; transform: scale(0.96); }
+}
+
+@keyframes lightbox-fade {
+  from { opacity: 0; }
+}
+
+/* ---------- No JavaScript (the <noscript> list) or a failed render ---------- */
+.works-nojs { padding-top: 0; text-align: center; }
+
+.works-nojs-list {
+  margin: 32px 0;
+  padding: 0;
+  list-style: none;
+  font-size: 18px;
+  line-height: 2.2;
+}
+
+.works-nojs-list a { border-bottom: 1px solid var(--accent); }
+
+/* ---------- Tablets and phones ---------- */
+@media (max-width: 1080px) {
+  .works-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .works-header h1 { font-size: 60px; }
+}
+
+@media (max-width: 640px) {
+  .works-page { padding: 60px 20px 0; }
+  .works-grid { grid-template-columns: minmax(0, 1fr); }
+  .works-header h1 { font-size: 45px; }
+  .works-footer {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 70px;
+    text-align: center;
+  }
+  .lightbox-stage { padding: 72px 12px 24px; }
+  .lightbox-img { --lightbox-gutter: 24px; --lightbox-chrome: 96px; }
+  .lightbox-close { top: 14px; right: 12px; }
+}
+
+/* ---------- Reduced motion: no lift, zoom, nudge, entrance or lightbox scale (fades stay) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .works-card,
+  .works-shot img,
+  .works-back-arrow,
+  .works-visit svg { transition: none; }
+  .works-card:hover,
+  .works-card:hover .works-shot img,
+  .works-back:hover .works-back-arrow,
+  .works-visit:hover svg,
+  .works-visit:focus-visible svg { transform: none; }
+  .works-item.will-enter { opacity: 1; transform: none; }
+  .lightbox[open] .lightbox-img,
+  .lightbox[open]::backdrop { animation: none; }
+}
+
+html.reduced-motion .works-card,
+html.reduced-motion .works-shot img,
+html.reduced-motion .works-back-arrow,
+html.reduced-motion .works-visit svg { transition: none; }
+
+html.reduced-motion .works-card:hover,
+html.reduced-motion .works-card:hover .works-shot img,
+html.reduced-motion .works-back:hover .works-back-arrow,
+html.reduced-motion .works-visit:hover svg,
+html.reduced-motion .works-visit:focus-visible svg { transform: none; }
+
+html.reduced-motion .works-item.will-enter { opacity: 1; transform: none; }
+
+html.reduced-motion .lightbox[open] .lightbox-img,
+html.reduced-motion .lightbox[open]::backdrop { animation: none; }
+
+@media print {
+  .works-item.will-enter { opacity: 1; transform: none; }
+  .works-overlay { display: none; }
+}

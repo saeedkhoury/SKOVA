@@ -1,0 +1,365 @@
+/* Fixed chrome: header + rolling nav, ambient glows, nav fade, social column, resume, cursor. */
+
+/* ---------- Header ---------- */
+.header {
+  display: flex;
+  max-width: var(--cMaxWidth);
+  width: var(--cWidth);
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 15px 0;
+  box-sizing: border-box;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  z-index: var(--z-header);
+  /* The header box is wide and tall on phones (stacked 44px links): only its links take taps,
+     so content scrolled underneath stays tappable. */
+  pointer-events: none;
+}
+
+.header a { pointer-events: auto; }
+
+.header ul {
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  column-gap: 20px;
+  row-gap: 6px;
+  align-items: flex-end;
+}
+
+.header ul li {
+  letter-spacing: 0.8px;
+  color: #ccc;
+  font-weight: 600;
+}
+
+.header ul a {
+  display: block;
+  text-transform: uppercase;
+}
+
+.navbar-connect {
+  position: absolute;
+  display: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  letter-spacing: 0.8px;
+  font-weight: 500;
+}
+
+/* The SKOVA logo (base.css .brand-lockup). Mark heights stay within the text's line box,
+   so the header keeps its height and the nav stays where it was. */
+.navbar-title {
+  --brand-mark-h: 18px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+}
+
+.hover-link {
+  position: relative;
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.hover-in {
+  position: relative;
+  display: block;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.hover-in > span {
+  display: flex;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+a:hover .hover-in,
+a:focus-visible .hover-in {
+  transform: translateY(-100%);
+  color: var(--accent);
+}
+
+@media only screen and (min-width: 500px) {
+  .header { padding: 20px 0; }
+  .header ul {
+    flex-direction: row;
+    align-items: center;
+    font-size: 14px;
+  }
+  .header ul li { color: var(--text); }
+  .navbar-title { font-size: 16px; --brand-mark-h: 22px; }
+}
+
+@media only screen and (min-width: 900px) {
+  .navbar-connect { display: block; }
+}
+
+@media only screen and (min-width: 1200px) {
+  .header { padding: 35px 0; }
+  .header ul {
+    column-gap: 80px;
+    font-size: 16px;
+  }
+  .navbar-connect { font-size: 16px; }
+  .navbar-title { font-size: 18px; --brand-mark-h: 26px; }
+}
+
+/* ---------- Ambient glows ---------- */
+.landing-circle1,
+.landing-circle2 {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background-color: var(--glow-pink);
+  box-shadow: inset -50px 40px 50px #5400ff99;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.landing-circle1 {
+  top: 0;
+  left: 0;
+  z-index: var(--z-glow-top);
+  filter: blur(60px);
+  transform: translate(-95%, -75%);
+  animation: glow-spin-1 5s linear infinite;
+}
+
+.landing-circle2 {
+  top: 50%;
+  right: 0;
+  z-index: 9;
+  display: none;
+  filter: blur(50px);
+  transform: translate(calc(100% - 2px), -50%);
+  animation: glow-spin-2 5s linear infinite;
+}
+
+@keyframes glow-spin-1 {
+  from { transform: translate(-95%, -75%) rotate(0deg); }
+  to { transform: translate(-95%, -75%) rotate(360deg); }
+}
+
+@keyframes glow-spin-2 {
+  from { transform: translate(calc(100% - 2px), -50%) rotate(0deg); }
+  to { transform: translate(calc(100% - 2px), -50%) rotate(360deg); }
+}
+
+@media screen and (min-width: 500px) {
+  .landing-circle2 { display: block; }
+}
+
+.nav-fade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 130px;
+  background-image: linear-gradient(0deg, transparent, var(--bg) 70%);
+  pointer-events: none;
+  z-index: var(--z-navfade);
+}
+
+/* ---------- Social column + resume ---------- */
+.icons-section {
+  position: fixed;
+  max-width: var(--cMaxWidth);
+  width: var(--cWidth);
+  bottom: 0;
+  z-index: var(--z-icons);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.social-icons {
+  position: absolute;
+  left: -20px;
+  bottom: 20px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+}
+
+.social-icons:hover,
+.social-icons a:hover {
+  color: var(--bg);
+  transition: color 0.3s;
+}
+
+.social-icons .social-cell {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+}
+
+.social-icons a {
+  --siLeft: 50%;
+  --siTop: 50%;
+  position: absolute;
+  left: var(--siLeft, 50%);
+  top: var(--siTop, 50%);
+  transform: translate(-50%, -50%);
+  display: flex;
+  font-size: 23px;
+  will-change: left, top;
+  transition: transform 0.3s ease-out, color 0.3s;
+}
+
+.social-icons svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+.resume-button {
+  position: absolute;
+  z-index: var(--z-icons);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  bottom: 40px;
+  right: 0;
+  padding: 14px 0;
+  white-space: nowrap;
+  letter-spacing: 4px;
+  font-size: 15px;
+  line-height: 15px;
+  font-weight: 600;
+  color: var(--dim);
+  transition: color 0.5s;
+  transform-origin: left bottom;
+  transform: translateX(100%) rotate(-90deg);
+}
+
+.resume-button:hover,
+.resume-button:focus-visible {
+  color: #fff;
+}
+
+.resume-button .resume-icon {
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.resume-button .resume-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+@media only screen and (min-width: 900px) {
+  .social-icons {
+    display: flex;
+    gap: 20px;
+  }
+  .social-icons a { font-size: 28px; }
+}
+
+@media only screen and (min-width: 768px) {
+  .resume-button {
+    transform: none;
+    padding: 0;
+    font-size: 20px;
+    line-height: 20px;
+  }
+  .resume-button .resume-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+/* ---------- Custom cursor ---------- */
+.cursor-main {
+  --size: 50px;
+  position: fixed;
+  top: calc(var(--size) / -2);
+  left: calc(var(--size) / -2);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50px;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  background-color: var(--cursor);
+  box-shadow: 0 0 30px var(--cursor-glow);
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: top 0.3s ease-out, left 0.3s ease-out, width 0.3s ease-out, height 0.3s ease-out, opacity 0.3s;
+}
+
+.cursor-main.is-visible { opacity: 1; }
+
+.cursor-main.cursor-icons {
+  top: 10px;
+  left: 10px;
+  height: calc(var(--cursorH) - 20px);
+  transition: all 0.5s ease-out, height 0.5s ease-in-out;
+}
+
+.cursor-main.cursor-disable { --size: 0px; }
+
+/* ---------- Touch: 44px targets ---------- */
+@media (pointer: coarse) {
+  .header { align-items: flex-start; }
+  .header ul { row-gap: 0; }
+  .header ul a,
+  .navbar-title {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .header ul a { justify-content: flex-end; }
+  .header { padding-top: 6px; }
+  /* Invisible hit areas around the small fixed links (all position: absolute already),
+     so the layout is unchanged: icons 28 to 44px, RESUME and the email to ~44px tall. */
+  .social-icons a::before,
+  .resume-button::before,
+  .navbar-connect::before {
+    content: "";
+    position: absolute;
+  }
+  .social-icons a::before { inset: -8px; }
+  .resume-button::before { inset: -11px -4px; }
+  .navbar-connect::before { inset: -12px 0; }
+}
+
+@media (pointer: coarse) and (min-width: 500px) {
+  .header ul a { justify-content: center; }
+}
+
+/* Phones: the stacked 44px nav is taller than the reference's, so the fade covers it too
+   (text scrolling under ABOUT / WORK / CONTACT dims instead of colliding with them). */
+@media (pointer: coarse) and (max-width: 499px) {
+  .nav-fade {
+    height: 180px;
+    background-image: linear-gradient(0deg, transparent, var(--bg) 70%);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .landing-circle1,
+  .landing-circle2 { animation: none; }
+  .hover-in { transition: color 0.3s; }
+  a:hover .hover-in,
+  a:focus-visible .hover-in { transform: none; }
+}
+
+html.reduced-motion .landing-circle1,
+html.reduced-motion .landing-circle2 { animation: none; }
+html.reduced-motion .hover-in { transition: color 0.3s; }
+html.reduced-motion a:hover .hover-in,
+html.reduced-motion a:focus-visible .hover-in { transform: none; }

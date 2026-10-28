@@ -1,0 +1,237 @@
+/* Tech stack: looping background video, overlay, gradient title, pyramid of glass tiles. */
+
+.techstack-new {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 80px 0;
+  box-sizing: border-box;
+  background-color: var(--bg);
+  z-index: 1;
+}
+
+.techstack-video-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--bg) center / cover no-repeat;
+}
+
+.techstack-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.techstack-video.is-failed { visibility: hidden; }
+
+.techstack-overlay {
+  position: absolute;
+  inset: 0;
+  background: #00000080;
+  z-index: 1;
+}
+
+.techstack-video-container::before,
+.techstack-video-container::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.techstack-video-container::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+}
+
+.techstack-video-container::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+}
+
+.techstack-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.techstack-content h2 {
+  font-size: 70px;
+  line-height: 1.2;
+  text-align: center;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0 0 50px;
+  background: linear-gradient(180deg, #fff, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.techstack-pyramid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.techstack-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.techstack-row > li { display: flex; }
+
+.techstack-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 55px;
+  height: 68px;
+  padding: 8px;
+  border-radius: 10px;
+  background: #ffffff08;
+  border: 1px solid #ffffff1a;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.techstack-item:hover,
+.techstack-item:focus-visible {
+  transform: translateY(-6px) scale(1.08);
+  background: #c2a4ff1a;
+  border-color: var(--accent);
+  box-shadow: 0 8px 30px #c2a4ff40;
+  color: inherit;
+}
+
+.techstack-item img,
+.techstack-mono {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+}
+
+.techstack-item img {
+  object-fit: contain;
+  filter: grayscale(100%) contrast(1.2) brightness(1.5);
+  opacity: 0.85;
+  transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.techstack-item:hover img,
+.techstack-item:focus-visible img {
+  filter: none;
+  opacity: 1;
+}
+
+.techstack-mono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: linear-gradient(140deg, #c2a4ff33, #7f40ff22);
+  border: 1px solid #c2a4ff4d;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text);
+}
+
+/* Multi-word names ("GitHub Actions", "Claude Code") wrap at their space onto a second line;
+   the tile has room for two lines at every size. */
+.techstack-item .techstack-name {
+  font-size: 9px;
+  line-height: 1.15;
+  color: #ffffffb3;
+  margin-top: 5px;
+  text-align: center;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: clip;
+  max-width: 50px;
+}
+
+.techstack-item:hover .techstack-name,
+.techstack-item:focus-visible .techstack-name { color: #fff; }
+
+/* Reference geometry above 900px: content-box section (100vh plus 80px above and below,
+   1060px tall at 900px high) and a 1.5 line-height title with the default h2 top margin. */
+@media screen and (min-width: 901px) {
+  .techstack-new { box-sizing: content-box; }
+  .techstack-content h2 {
+    line-height: 1.5;
+    margin-top: 0.83em;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .techstack-content { max-width: 900px; }
+  .techstack-item { width: 50px; height: 62px; }
+  .techstack-item img,
+  .techstack-mono { width: 26px; height: 26px; }
+  .techstack-item .techstack-name { font-size: 8px; }
+}
+
+@media screen and (max-width: 900px) {
+  .techstack-content h2 { font-size: 50px; margin-bottom: 35px; }
+  .techstack-new { padding: 60px 0; }
+  .techstack-content { padding: 0 12px; }
+  .techstack-pyramid { gap: 6px; }
+  .techstack-row { gap: 6px; flex-wrap: nowrap; }
+}
+
+@media screen and (max-width: 768px) {
+  .techstack-content h2 { font-size: 40px; margin-bottom: 30px; }
+}
+
+@media screen and (max-width: 600px) {
+  .techstack-content h2 { font-size: 32px; }
+  /* 50px outer tiles: the 44px touch-target minimum with a little to spare. */
+  .techstack-item {
+    width: 40px;
+    height: 52px;
+    padding: 4px;
+    border-radius: 8px;
+  }
+  .techstack-item img,
+  .techstack-mono { width: 24px; height: 24px; }
+  .techstack-mono { font-size: 9px; }
+  .techstack-item .techstack-name {
+    font-size: 8px;
+    max-width: 42px;
+    margin-top: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .techstack-item,
+  .techstack-item img { transition: none; }
+  .techstack-item:hover,
+  .techstack-item:focus-visible { transform: none; }
+}
+
+html.reduced-motion .techstack-item,
+html.reduced-motion .techstack-item img { transition: none; }
+html.reduced-motion .techstack-item:hover,
+html.reduced-motion .techstack-item:focus-visible { transform: none; }

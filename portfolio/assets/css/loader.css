@@ -1,0 +1,393 @@
+/* Loading screen. Look and timings verified against the reference (spec section 1, "Loader"). */
+
+.loader { display: none; }
+
+html.js .loader {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loader);
+  /* CSS failsafe: if no script ever takes over, get out of the way. The inline head script
+     already shows the plain page at 9s when the page script failed (html.boot-failed), and
+     waits up to 30s while it is still downloading, so this only backs that up. */
+  animation: loader-failsafe 0s 30s forwards;
+}
+
+html.js .loader.is-running { animation: none; }
+
+@keyframes loader-failsafe {
+  to {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: var(--vh);
+  background-color: var(--loader-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loading-header {
+  width: var(--cWidth);
+  max-width: var(--cMaxWidth);
+  position: fixed;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 20px 0;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  color: var(--bg);
+}
+
+/* SKOVA with the dark S (base.css .brand-lockup), sized like the header logo it hands over to. */
+.loader-title {
+  --brand-mark-h: 18px;
+  align-self: flex-start; /* the row is as tall as the game box: keep the title at the top */
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.2px;
+}
+
+/* The little "game": bars scrolling left, a lavender ball bouncing. */
+.loaderGame-container {
+  width: 200px;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  transform: scale(0.4);
+  transform-origin: top right;
+  transition: opacity 0.3s;
+}
+
+.loader-out .loaderGame-container { opacity: 0; }
+
+.loaderGame-in {
+  width: 1200px;
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  animation: loaderGame 7s linear infinite;
+}
+
+@keyframes loaderGame {
+  from { transform: translateX(0); }
+  to { transform: translateX(-300px); }
+}
+
+.loaderGame-line {
+  float: left;
+  margin: 0 20px 40px;
+  position: relative;
+  width: 10px;
+  height: 60px;
+  background-color: #000;
+  display: block;
+}
+
+.loaderGame-line:nth-child(2n) {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.loaderGame-ball {
+  position: absolute;
+  left: 20%;
+  top: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: var(--loader-blob);
+  transform: translateY(10px);
+  animation: ball25 7s infinite;
+  animation-timing-function: cubic-bezier(0.3, 1.18, 0.63, 1.28);
+}
+
+@keyframes ball25 {
+  0% { transform: translateY(70px); }
+  15% { transform: translateY(10px); }
+  30% { transform: translateY(70px); }
+  45% { transform: translateY(10px); }
+  67% { transform: translateY(70px); }
+  80% { transform: translateY(10px); }
+  90% { transform: translateY(70px); }
+  to { transform: translateY(70px); }
+}
+
+/* Giant role marquee behind the pill. */
+.loading-marquee {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  color: var(--bg);
+  font-size: 60px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: uppercase;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.loading-track {
+  display: flex;
+  width: max-content;
+  animation: loader-marquee var(--marquee-duration, 50s) linear infinite;
+}
+
+.loading-track span {
+  padding: 0 50px;
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.loading-track span::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: var(--bg);
+  position: absolute;
+  top: 50%;
+  border-radius: 50px;
+  left: 0;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes loader-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* The black pill. */
+.loading-wrap {
+  --Lsize: 145px;
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  padding: 6px;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 100px;
+  background-color: var(--loader-pill);
+  overflow: hidden;
+  transition: 0.8s ease-in-out;
+  transition-delay: 0.2s;
+  box-shadow: 0 15px 15px #0003;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 2;
+}
+
+.loading-wrap.loading-clicked {
+  transition-delay: 0ms;
+  transition-timing-function: cubic-bezier(0.33, 0.11, 1, 0.72);
+  box-shadow: none;
+}
+
+/* The flood: a black layer the pill's size, centred behind it, scaled up to the reference's
+   calc(100vw + 5000px) x calc(100vh + 500px) with its easing and 0.8s. Scaling a layer only
+   repaints, where growing the pill's min-width/min-height shifted the layout (CLS).
+   loader.js sets the size and scale variables just before the flood starts. */
+.loading-screen::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--flood-w, 0px);
+  height: var(--flood-h, 0px);
+  margin: calc(var(--flood-h, 0px) / -2) 0 0 calc(var(--flood-w, 0px) / -2);
+  border-radius: 100px;
+  background-color: var(--loader-pill);
+  z-index: 1;
+  pointer-events: none;
+  transition: transform 0.8s cubic-bezier(0.33, 0.11, 1, 0.72);
+}
+
+.loader-out .loading-screen::before {
+  transform: scale(var(--flood-sx, 1), var(--flood-sy, 1));
+}
+
+.loading-hover {
+  background-color: var(--loader-blob);
+  width: 250px;
+  height: 120px;
+  position: absolute;
+  top: var(--mouse-y);
+  left: var(--mouse-x);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  filter: blur(30px);
+  opacity: 1;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+.loading-clicked .loading-hover { opacity: 0; }
+
+.loading-button {
+  padding: 20px 50px;
+  border-radius: 100px;
+  background-color: #000;
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5;
+  position: relative;
+  z-index: 9;
+}
+
+.loading-clicked .loading-button { overflow: visible; }
+
+.loading-container {
+  position: absolute;
+  width: 100%;
+  max-width: var(--Lsize);
+  top: 50%;
+  left: 50px;
+  z-index: 9;
+  transform: translateY(-50%);
+  transition: max-width 1s;
+}
+
+.loading-complete .loading-container { max-width: 0; }
+
+.loading-content {
+  position: relative;
+  background-color: #000;
+  width: 100%;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+.loading-content-in {
+  position: relative;
+  width: var(--Lsize);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.loading-percent {
+  font-weight: 300;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+.loading-box {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(100%, -50%);
+  width: 15px;
+  height: 25px;
+  background-color: #fff;
+  animation: loader-blink 1s linear infinite;
+}
+
+@keyframes loader-blink {
+  0% { opacity: 0; }
+  25% { opacity: 1; }
+  75% { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.loading-complete .loading-box {
+  animation: loader-blink-done 0.3s forwards;
+  animation-delay: 1s;
+  opacity: 1;
+}
+
+@keyframes loader-blink-done {
+  to { opacity: 0; }
+}
+
+.loading-content2 {
+  position: relative;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  width: var(--Lsize);
+  max-width: var(--Lsize);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+  text-align: center;
+  transition: 1s;
+}
+
+.loading-content2 span { transition: 1s; }
+
+.loading-clicked .loading-content2 {
+  opacity: 0;
+  overflow: visible;
+  transition: 0.5s;
+}
+
+.loading-clicked .loading-content2 span {
+  transform: translateY(100px);
+  opacity: 0;
+}
+
+/* Fade-out used by the reduced-motion path. */
+.loader.is-fading {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+@media only screen and (min-width: 500px) {
+  .loader-title { font-size: 16px; --brand-mark-h: 22px; }
+}
+
+@media only screen and (min-width: 1200px) {
+  .loading-header { padding: 35px 0; }
+  .loader-title { font-size: 18px; --brand-mark-h: 26px; }
+}
+
+@media only screen and (min-width: 1400px) {
+  .loading-wrap { --Lsize: 210px; }
+  .loading-button {
+    padding: 30px 70px;
+    font-size: 25px;
+  }
+  .loading-container { left: 70px; }
+  .loading-marquee { font-size: 100px; }
+}
+
+/* Reduced motion: nothing scrolls, nothing grows. */
+html.reduced-motion .loading-track,
+html.reduced-motion .loaderGame-in,
+html.reduced-motion .loaderGame-ball,
+html.reduced-motion .loading-box { animation: none; }
+
+html.reduced-motion .loading-wrap,
+html.reduced-motion .loading-container,
+html.reduced-motion .loading-content2,
+html.reduced-motion .loading-content2 span { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-track,
+  .loaderGame-in,
+  .loaderGame-ball,
+  .loading-box { animation: none; }
+  .loading-wrap,
+  .loading-container,
+  .loading-content2,
+  .loading-content2 span { transition: none; }
+}

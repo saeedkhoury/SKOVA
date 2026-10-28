@@ -1,0 +1,7 @@
+# Not part of the public site on Cloudflare
+README.md
+vercel.json
+.vercelignore
+.gitignore
+.vercel
+.DS_Store

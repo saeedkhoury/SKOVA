@@ -1,0 +1,248 @@
+/* Global base, accessibility helpers, footer and the plain fallback. */
+
+html {
+  color-scheme: dark;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-optical-sizing: auto;
+  line-height: 1.5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body {
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--bg);
+  -webkit-tap-highlight-color: transparent;
+}
+
+html.js body {
+  transition: background-color 0.5s ease 1s;
+}
+
+/* While the loader is up: black page under the light screen, scroll locked.
+   The lock releases on its own after 9s if the script ever stalls. */
+html.js.is-loading {
+  overflow-y: hidden;
+  animation: unlock-scroll 0s 9s forwards;
+}
+
+html.js.is-loading body {
+  background-color: #000;
+}
+
+@keyframes unlock-scroll {
+  to { overflow-y: visible; }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font);
+}
+
+img,
+svg,
+video {
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+main {
+  position: relative;
+  display: block;
+}
+
+main:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: var(--z-skip);
+  padding: 12px 20px;
+  border-radius: 40px;
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+  font-size: 14px;
+  transform: translateY(-200%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: none;
+  color: var(--bg);
+}
+
+/* ---------- Brand lockup: the SKOVA S mark + name (header logo, loading screen title) ---------- */
+.brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--brand-gap, 0.4em);
+  white-space: nowrap;
+}
+
+.brand-mark {
+  flex: none;
+  width: auto;
+  height: var(--brand-mark-h, 1.4em);
+  /* The shipped mark files are 79 x 128 px: hold the space before they load. */
+  aspect-ratio: auto 79 / 128;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.brand-name { letter-spacing: var(--brand-tracking, 0.08em); }
+
+.section-container {
+  width: 1300px;
+  max-width: calc(100% - 160px);
+}
+
+@media only screen and (max-width: 1600px) {
+  .section-container { width: 1200px; }
+}
+
+@media only screen and (max-width: 1400px) {
+  .section-container { width: 900px; }
+}
+
+@media only screen and (max-width: 900px) {
+  .section-container {
+    width: 500px;
+    max-width: var(--cWidth);
+  }
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  display: flex;
+  justify-content: center;
+  padding: 0 0 48px;
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+}
+
+.back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dim);
+  transition: color 0.3s;
+}
+
+.back-to-top svg {
+  width: 14px;
+  height: 14px;
+  transform: rotate(-45deg);
+}
+
+.back-to-top:hover { color: var(--text); }
+
+/* ---------- Plain fallback (no JS, or the page script failed) ---------- */
+.nojs {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 120px 24px 80px;
+}
+
+.nojs-name {
+  margin: 0;
+  font-size: clamp(36px, 8vw, 60px);
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.nojs-role {
+  margin: 8px 0 32px;
+  color: var(--accent-role);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.nojs-about {
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.nojs-links {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.nojs-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-bottom: 1px solid #ccc;
+}
+
+html.boot-failed .loader { display: none !important; }
+
+[tabindex="-1"]:focus:not(:focus-visible) { outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .skip-link { transition: none; }
+}
+
+html.reduced-motion .skip-link { transition: none; }

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>SKOVA · Saeed Khoury, software developer and AI engineer</title>
+  <meta name="description" content="SKOVA by Saeed Khoury, software developer and AI engineer from Kafr Kanna: websites in Arabic, Hebrew, and English, built with AI and checked by tests.">
+  <meta name="theme-color" content="#0b080c">
+  <meta name="color-scheme" content="dark">
+  <meta name="author" content="Saeed Khoury">
+  <meta name="application-name" content="SKOVA">
+  <meta name="apple-mobile-web-app-title" content="SKOVA">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="SKOVA">
+  <meta property="og:title" content="SKOVA · Saeed Khoury, software developer and AI engineer">
+  <meta property="og:description" content="SKOVA by Saeed Khoury, software developer and AI engineer from Kafr Kanna: websites in Arabic, Hebrew, and English, built with AI and checked by tests.">
+  <meta property="og:image" content="https://skova.dev/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="Saeed Khoury, software developer and AI engineer, with his 3D avatar and the SKOVA logo">
+  <meta property="og:locale" content="en_US">
+  <!-- The live address. If the site moves to its own domain, change og:url and og:image here, meta.url in site.config.js, and the canonical link. -->
+  <meta property="og:url" content="https://skova.dev/">
+  <link rel="canonical" href="https://skova.dev/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SKOVA · Saeed Khoury, software developer and AI engineer">
+  <meta name="twitter:description" content="SKOVA by Saeed Khoury, software developer and AI engineer from Kafr Kanna: websites in Arabic, Hebrew, and English, built with AI and checked by tests.">
+  <meta name="twitter:image" content="https://skova.dev/assets/img/og.jpg">
+  <meta name="twitter:image:alt" content="Saeed Khoury, software developer and AI engineer, with his 3D avatar and the SKOVA logo">
+  <!-- Structured data for search engines (a data block: not executed, so the security policy does not apply). -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://skova.dev/#website",
+        "url": "https://skova.dev/",
+        "name": "SKOVA",
+        "alternateName": "Saeed Khoury",
+        "inLanguage": "en",
+        "publisher": {
+          "@id": "https://skova.dev/#org"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://skova.dev/#org",
+        "name": "SKOVA",
+        "url": "https://skova.dev/",
+        "logo": "https://skova.dev/assets/img/brand/favicon-512.png",
+        "founder": {
+          "@id": "https://skova.dev/#person"
+        },
+        "sameAs": [
+          "https://github.com/saeedkhoury"
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://skova.dev/#person",
+        "name": "Saeed Khoury",
+        "jobTitle": "Software developer and AI engineer",
+        "url": "https://skova.dev/",
+        "image": "https://skova.dev/assets/img/og.jpg",
+        "homeLocation": {
+          "@type": "Place",
+          "name": "Kafr Kanna, Israel"
+        },
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "Kinneret Academic College"
+        },
+        "knowsLanguage": [
+          "Arabic",
+          "Hebrew",
+          "English"
+        ],
+        "knowsAbout": [
+          "Web development",
+          "AI-assisted software development",
+          "TypeScript",
+          "Astro",
+          "Next.js",
+          "Accessibility",
+          "Software testing"
+        ],
+        "worksFor": {
+          "@id": "https://skova.dev/#org"
+        },
+        "sameAs": [
+          "https://github.com/saeedkhoury",
+          "https://www.linkedin.com/in/saeed-khoury-a5a119359/"
+        ]
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://skova.dev/#profile",
+        "url": "https://skova.dev/",
+        "name": "SKOVA · Saeed Khoury, software developer and AI engineer",
+        "description": "SKOVA by Saeed Khoury, software developer and AI engineer from Kafr Kanna: websites in Arabic, Hebrew, and English, built with AI and checked by tests.",
+        "isPartOf": {
+          "@id": "https://skova.dev/#website"
+        },
+        "mainEntity": {
+          "@id": "https://skova.dev/#person"
+        },
+        "primaryImageOfPage": "https://skova.dev/assets/img/og.jpg"
+      }
+    ]
+  }
+  </script>
+
+  <!-- SKOVA tab icons (the S logo on a white tile). favicon.ico in this folder is for tools that ask for it directly. -->
+  <link rel="icon" href="assets/img/brand/favicon-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="assets/img/brand/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="assets/img/brand/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/brand/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.remove('no-js');
+      d.classList.add('js', 'is-loading');
+      // Reduced motion: the OS setting, or ?motion=reduce (the test switch in the README).
+      var reduceParam = /[?&]motion=reduce(&|$)/.test(window.location.search);
+      try {
+        if (reduceParam || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+          d.classList.add('reduced-motion');
+        }
+      } catch (e) {
+        if (reduceParam) d.classList.add('reduced-motion');
+      }
+      // Slow networks: until the page script takes over, keep the counter moving a little
+      // (to 30% at most). loader.js continues from the number shown, never backwards.
+      var PRE_STEP_MS = 400, PRE_CAP = 30, pre = 0;
+      var preTimer = window.setInterval(function () {
+        var loader = document.getElementById('loader');
+        var pct = document.getElementById('loader-percent');
+        var taken = d.classList.contains('rendered') || d.classList.contains('boot-failed');
+        // No #loader yet while the body is still being parsed: wait for it.
+        var gone = loader ? loader.classList.contains('is-running') : document.readyState !== 'loading';
+        if (taken || gone || pre >= PRE_CAP) {
+          window.clearInterval(preTimer);
+          return;
+        }
+        if (pct) {
+          pre = Math.min(PRE_CAP, pre + 1 + Math.round(Math.random() * 2));
+          pct.textContent = pre + '%';
+        }
+      }, PRE_STEP_MS);
+      // Last-resort failsafe: if the page script never renders (blocked, 404, crash), show the
+      // plain fallback content and release the scroll lock. While the deferred scripts are still
+      // downloading (DOMContentLoaded waits for them), keep waiting, up to 30s in all.
+      var FAILSAFE_MS = 9000, RETRY_MS = 1000, CAP_MS = 30000, t0 = Date.now(), parsed = false;
+      document.addEventListener('DOMContentLoaded', function () { parsed = true; });
+      function failsafe() {
+        if (d.classList.contains('rendered')) return;
+        if (!parsed && Date.now() - t0 < CAP_MS) {
+          window.setTimeout(failsafe, RETRY_MS);
+          return;
+        }
+        var fallback = document.getElementById('nojs');
+        var main = document.getElementById('main');
+        if (fallback && main) main.insertAdjacentHTML('afterbegin', fallback.textContent);
+        d.classList.remove('is-loading');
+        d.classList.add('boot-failed');
+      }
+      window.setTimeout(failsafe, FAILSAFE_MS);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap">
+
+  <link rel="stylesheet" href="assets/vendor/lenis/lenis.css">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/chrome.css">
+  <link rel="stylesheet" href="assets/css/loader.css">
+  <link rel="stylesheet" href="assets/css/hero.css">
+  <link rel="stylesheet" href="assets/css/whatido.css">
+  <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="stylesheet" href="assets/css/title-card.css">
+  <link rel="stylesheet" href="assets/css/work.css">
+  <link rel="stylesheet" href="assets/css/tech.css">
+
+  <script type="importmap">
+    { "imports": { "three": "./assets/vendor/three/three.module.min.js", "three/addons/": "./assets/vendor/three/examples/jsm/" } }
+  </script>
+  <!-- Fetch the whole page-script module graph in parallel (it is otherwise discovered one level at a time).
+       Keep this list in step with the static imports under assets/js (the avatar and its scroll story load separately, only where the live avatar runs). -->
+  <link rel="modulepreload" href="site.config.js">
+  <link rel="modulepreload" href="assets/js/render.js">
+  <link rel="modulepreload" href="assets/js/loader.js">
+  <link rel="modulepreload" href="assets/js/util/dom.js">
+  <link rel="modulepreload" href="assets/js/util/env.js">
+  <link rel="modulepreload" href="assets/js/util/log.js">
+  <link rel="modulepreload" href="assets/js/util/icons.js">
+  <link rel="modulepreload" href="assets/js/render/shared.js">
+  <link rel="modulepreload" href="assets/js/render/brand.js">
+  <link rel="modulepreload" href="assets/js/render/sections.js">
+  <link rel="modulepreload" href="assets/js/render/work.js">
+  <link rel="modulepreload" href="assets/js/render/title-card.js">
+  <link rel="modulepreload" href="assets/js/render/tech.js">
+  <link rel="modulepreload" href="assets/js/motion/index.js">
+  <link rel="modulepreload" href="assets/js/motion/intro.js">
+  <link rel="modulepreload" href="assets/js/motion/smooth.js">
+  <link rel="modulepreload" href="assets/js/motion/roles.js">
+  <link rel="modulepreload" href="assets/js/motion/reveals.js">
+  <link rel="modulepreload" href="assets/js/motion/whatido.js">
+  <link rel="modulepreload" href="assets/js/motion/career.js">
+  <link rel="modulepreload" href="assets/js/motion/work.js">
+  <link rel="modulepreload" href="assets/js/motion/tech.js">
+  <link rel="modulepreload" href="assets/js/motion/contact.js">
+  <link rel="modulepreload" href="assets/js/motion/cursor.js">
+  <link rel="modulepreload" href="assets/js/motion/social.js">
+  <link rel="modulepreload" href="assets/js/motion/nav.js">
+  <script defer src="assets/vendor/gsap/gsap.min.js"></script>
+  <script defer src="assets/vendor/gsap/ScrollTrigger.min.js"></script>
+  <script defer src="assets/vendor/gsap/SplitText.min.js"></script>
+  <script defer src="assets/vendor/lenis/lenis.min.js"></script>
+  <script type="module" src="assets/js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="loader" id="loader">
+    <div class="loading-header">
+      <span class="loader-title brand-lockup" id="loader-name"><img class="brand-mark" src="assets/img/brand/skova-mark-dark.webp" alt="" draggable="false"><span class="brand-name">SKOVA</span></span>
+      <div class="loaderGame" aria-hidden="true">
+        <div class="loaderGame-container">
+          <div class="loaderGame-in" id="loader-game"></div>
+          <div class="loaderGame-ball"></div>
+        </div>
+      </div>
+    </div>
+    <div class="loading-screen">
+      <div class="loading-marquee" aria-hidden="true"><div class="loading-track" id="loader-track"></div></div>
+      <div class="loading-wrap" id="loader-wrap">
+        <div class="loading-hover" aria-hidden="true"></div>
+        <div class="loading-button" id="loader-button">
+          <div class="loading-container" aria-hidden="true">
+            <div class="loading-content">
+              <div class="loading-content-in">Loading <span class="loading-percent" id="loader-percent">0%</span></div>
+            </div>
+            <div class="loading-box"></div>
+          </div>
+          <div class="loading-content2" aria-hidden="true"><span>Welcome</span></div>
+        </div>
+      </div>
+      <p class="sr-only" id="loader-status" role="status" aria-live="polite">Loading</p>
+    </div>
+  </div>
+
+  <header class="header" id="site-header"></header>
+  <div class="landing-circle1" aria-hidden="true"></div>
+  <div class="landing-circle2" aria-hidden="true"></div>
+  <div class="nav-fade" aria-hidden="true"></div>
+  <div class="icons-section" id="icons-section"></div>
+
+  <main id="main" tabindex="-1">
+    <section class="landing-section" id="home" aria-labelledby="hero-name"></section>
+    <section class="about-section" id="about" aria-labelledby="about-title"></section>
+    <section class="whatIDO whatido" id="what-i-do" aria-labelledby="whatido-title"></section>
+    <section class="career-section section-container" id="career" aria-labelledby="career-title"></section>
+    <section class="work-section" id="work" aria-labelledby="work-title"></section>
+    <section class="techstack-new tech" id="tech" aria-labelledby="tech-title"></section>
+    <section class="cta-section cta" id="cta" aria-label="Get in touch"></section>
+    <section class="contact-section section-container" id="contact" aria-labelledby="contact-title"></section>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <noscript id="nojs">
+    <div class="nojs">
+      <h1 class="nojs-name">Saeed Khoury</h1>
+      <p class="nojs-role">Software developer and AI engineer</p>
+      <p class="nojs-about">I build software with AI, and I check what it writes. I'm a fourth-year Software Engineering student at Kinneret Academic College, from Kafr Kanna. Arabic is my first language, I'm fluent in Hebrew, and I work in English.</p>
+      <ul class="nojs-links">
+        <li><a href="works.html">All works</a></li>
+        <li><a href="mailto:saed.khoury10@gmail.com">saed.khoury10@gmail.com</a></li>
+        <li><a href="https://github.com/saeedkhoury" rel="noopener">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/saeed-khoury-a5a119359/" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://wa.me/972505854855" rel="noopener">WhatsApp</a></li>
+        <li><a href="assets/Saeed_Khoury_CV.pdf">CV (PDF)</a></li>
+      </ul>
+    </div>
+  </noscript>
+</body>
+</html>

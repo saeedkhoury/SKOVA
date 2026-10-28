@@ -1,0 +1,26 @@
+# Response headers on Cloudflare (Workers static assets), the same as vercel.json:
+# the security policy (keep its two sha256 hashes in step with the inline scripts in index.html)
+# and caching for the big assets.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-Kw/FjzQXzm4lLWT5wd6AWCgx9K5mBz8fdKRiXhf+a/8=' 'sha256-3BFqofwNsUpIIb4xTAi70BxvSq+ONW/aismV0Lp5Ft0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self'; connect-src 'self' blob:; worker-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'none'; object-src 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+
+/assets/vendor/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/models/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/video/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/img/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/assets/icons/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800

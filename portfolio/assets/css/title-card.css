@@ -1,0 +1,55 @@
+/* The designed title card: shown where a project has no picture, or its picture fails to load
+   (render/title-card.js). Used by "My Work" on the home page (sizes per screen in work.css)
+   and by the All Works page (works.css places it over the card picture area). */
+
+.work-card {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  aspect-ratio: var(--ar, 1.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 28px;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid #ffffff1a;
+  background:
+    radial-gradient(120% 90% at 85% 10%, #c2a4ff40 0%, transparent 55%),
+    radial-gradient(90% 80% at 0% 100%, #7f40ff2e 0%, transparent 60%),
+    linear-gradient(160deg, #1a1420 0%, #0e0a10 70%);
+  box-shadow: inset 0 1px 0 #ffffff14, 0 20px 50px #00000066;
+}
+
+.work-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(#ffffff0d 1px, transparent 1px),
+    linear-gradient(90deg, #ffffff0d 1px, transparent 1px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(120% 100% at 70% 20%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(120% 100% at 70% 20%, #000 0%, transparent 75%);
+  pointer-events: none;
+}
+
+.work-card-cat,
+.work-card-title { position: relative; }
+
+.work-card-cat {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.work-card-title {
+  font-size: 34px;
+  line-height: 1.05;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text);
+}

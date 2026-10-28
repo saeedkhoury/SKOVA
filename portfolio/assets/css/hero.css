@@ -1,0 +1,603 @@
+/* Hero (landing), avatar layer and static portrait. */
+
+.landing-section {
+  width: 100%;
+  max-width: var(--cMaxWidth);
+  margin: auto;
+  position: relative;
+  height: var(--vh);
+}
+
+.landing-container {
+  width: var(--cWidth);
+  margin: auto;
+  height: 100%;
+  position: relative;
+  z-index: 9;
+  max-width: var(--cMaxWidth);
+}
+
+.landing-intro {
+  position: absolute;
+  z-index: 9;
+  top: 5%;
+  left: 0;
+}
+
+.landing-greeting {
+  margin: 0;
+  color: var(--accent);
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  line-height: 1.3;
+}
+
+.landing-name {
+  margin: 0;
+  letter-spacing: 2px;
+  font-size: 28px;
+  line-height: 1.05;
+  font-weight: 500;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.landing-info {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+  bottom: 40px;
+  z-index: 9;
+}
+
+/* Role roll: every line clips its own words; words of all roles share one grid
+   cell so the box always reserves the widest role (no layout shift). */
+.role-line {
+  display: grid;
+  overflow: hidden;
+  justify-items: start;
+}
+
+.role-word {
+  grid-area: 1 / 1;
+  display: block;
+  white-space: nowrap;
+}
+
+.role-word .w {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.role-word .ch {
+  display: inline-block;
+}
+
+.role-word:not(.is-first) .ch {
+  transform: translateY(110%);
+  opacity: 0;
+}
+
+.role-article {
+  font-size: 22px;
+  letter-spacing: 2px;
+  font-weight: 300;
+  color: var(--accent);
+  line-height: 1.25;
+}
+
+.role-article .w:first-child .ch:first-child { text-transform: uppercase; }
+
+.role-accent {
+  color: var(--accent-role);
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.12;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: -3px;
+}
+
+.role-rest {
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.12;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+@media screen and (min-width: 500px) {
+  .role-article,
+  .landing-greeting { font-size: 18px; }
+  .landing-name { font-size: 30px; }
+  .role-rest { font-size: 35px; }
+  .role-accent { font-size: 38px; }
+}
+
+@media screen and (min-width: 768px) {
+  .landing-greeting { font-size: 25px; }
+  .landing-name { font-size: 40px; }
+  .role-article { font-size: 25px; }
+  .role-rest { font-size: 45px; }
+  .role-accent { font-size: 55px; }
+}
+
+@media screen and (min-width: 1600px) {
+  .landing-greeting { font-size: 35px; }
+  .landing-name { font-size: 60px; }
+  .role-article { font-size: 35px; }
+  .role-rest { font-size: clamp(48px, 3.5vw, 65px); line-height: 1.1; }
+  .role-accent { font-size: clamp(58px, 4.2vw, 75px); }
+}
+
+/* ---------- Desktop composition (> 1024) ---------- */
+@media screen and (min-width: 1025px) {
+  .landing-intro {
+    top: 40%;
+    left: auto;
+    right: 66%;
+    transform: translateY(-50%);
+  }
+  /* The reference centres this block at 51%; with the big bust its last line would meet the
+     right shoulder (the canvas draws over text), so it sits a little higher, beside the face. */
+  .landing-info {
+    bottom: auto;
+    top: 47%;
+    text-align: left;
+    transform: translateY(-50%);
+    right: auto;
+    left: 66%;
+    max-width: min(420px, 32vw);
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .landing-intro { right: 70%; }
+  .landing-info {
+    left: 70%;
+    max-width: min(480px, 30vw);
+  }
+}
+
+/* ---------- Tablet (769..1024): text over a bottom-centred portrait ---------- */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .landing-intro { top: 120px; }
+  .landing-info {
+    text-align: center;
+    bottom: 48px;
+    /* the role sits over the photo's jacket and shirt: a soft dark halo keeps it legible */
+    text-shadow: 0 0 24px var(--bg), 0 2px 10px var(--bg);
+  }
+  /* over the character's white polo a wide dark halo shows as boxes: keep only a tight shadow */
+  .landing-section:has(> .avatar-layer[data-avatar-mode="character"]) .landing-info {
+    text-shadow: 0 1px 6px var(--bg);
+  }
+  .landing-info .role-line { justify-items: center; }
+}
+
+/* ---------- Mobile (<= 768): centred column, portrait under the text ---------- */
+@media only screen and (max-width: 768px) {
+  .landing-section {
+    height: auto;
+    min-height: var(--vh);
+    max-width: 100vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 96px 24px 56px;
+  }
+  .landing-container {
+    height: auto;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .landing-intro,
+  .landing-info {
+    position: relative;
+    inset: auto;
+    transform: none;
+    text-align: center;
+    width: 100%;
+  }
+  .landing-intro { margin-bottom: 28px; }
+  .landing-greeting {
+    font-size: clamp(18px, 4.5vw, 24px);
+    font-weight: 500;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .landing-name {
+    font-size: clamp(34px, 9vw, 48px);
+    line-height: 1.15;
+    letter-spacing: 3px;
+    white-space: normal;
+    word-spacing: 0.1em;
+  }
+  .landing-info .role-line { justify-items: center; }
+  .role-article {
+    font-size: clamp(16px, 4vw, 20px);
+    font-weight: 400;
+    line-height: 1.3;
+  }
+  .role-accent {
+    font-size: clamp(28px, 8vw, 42px);
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+  }
+  .role-rest {
+    font-size: clamp(16px, 4.5vw, 22px);
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 1.3;
+    color: #fffffff2;
+  }
+}
+
+/* ---------- Avatar layer + static portrait ---------- */
+.avatar-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.avatar-layer canvas {
+  pointer-events: none;
+}
+
+/* The live avatar's canvas only shows while it is active; otherwise the still picture does. */
+html:not(.avatar-live) .avatar-layer canvas {
+  visibility: hidden;
+}
+
+.character-rim {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  z-index: 1;
+  background-color: var(--glow-rim);
+  box-shadow: inset 66px 35px 85px #5500ffa6;
+  filter: blur(50px);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 100%) scale(1.4);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Face hotspot of the live character: a 280px circle over the face (like the reference's
+   .character-hover). It never takes pointer events; track.js tests the pointer against it. */
+.character-hover {
+  position: absolute;
+  z-index: 3;
+  top: 48%;
+  left: 50%;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+html:not(.avatar-live) .character-hover { display: none; }
+
+.avatar-fallback {
+  position: absolute;
+  z-index: 2;
+  top: 16%;
+  left: 50%;
+  height: 120%;
+  width: auto;
+  max-width: none;
+  transform: translateX(-50%);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.avatar-fallback:not([src]),
+.avatar-fallback.is-broken,
+html.avatar-live .avatar-fallback {
+  visibility: hidden;
+}
+
+/* A model that arrives after the loading screen (main.js adoptLateAvatar) starts lit, and its
+   canvas fades in over the lit still instead of cutting to it. */
+html.avatar-arriving .avatar-fallback[src]:not(.is-broken) {
+  visibility: visible;
+}
+
+html.avatar-arriving .avatar-layer canvas {
+  animation: avatar-arrive 0.4s ease-out both;
+}
+
+@keyframes avatar-arrive {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Soft floor under the cut-out bust (desktop and tablet). */
+.avatar-layer::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 22%;
+  z-index: 3;
+  background-image: linear-gradient(to bottom, transparent, var(--bg) 85%);
+  pointer-events: none;
+}
+
+html.avatar-live .avatar-layer::after { display: none; }
+
+/* The live seated avatar (desktop): a soft floor fade at the bottom of the hero and About, so the
+   bust ends at the chest like the reference's and his lap recedes. stage.js sets --scene-fade from
+   the scroll story (1 at the hero, 0 once the camera has pulled back to the desk). */
+html.avatar-live .avatar-layer[data-avatar-mode="character"]::after {
+  display: block;
+  height: 18%;
+  opacity: var(--scene-fade, 1);
+  background-image: linear-gradient(to bottom, transparent, var(--bg));
+}
+
+/* Lights on for the static portrait (the live avatar drives its own rim). On desktop the
+   glow keeps the live avatar's place (low, behind the shoulders, mostly under the floor
+   fade); on tablets it sits behind the chest of the larger photo. */
+@media screen and (max-width: 1024px) {
+  html:not(.avatar-live) .character-rim { top: 30%; }
+}
+
+html.lights-on:not(.avatar-live) .character-rim {
+  transform: translate(-50%, 55%) scale(1.4);
+  opacity: 1;
+  transition: transform 2s ease 0.2s, opacity 2s ease 0.2s;
+}
+
+/* Static portrait "lights on": it waits in dim light under the loader, then brightens
+   (exposure only, colours untouched) while the rim glow rises. */
+html.js:not(.avatar-live) .avatar-fallback {
+  filter: brightness(0.4);
+  transition: filter 2s ease 0.2s;
+}
+
+html.js.lights-on:not(.avatar-live) .avatar-fallback {
+  filter: none;
+  animation: portrait-float 6s ease-in-out infinite;
+}
+
+html.lights-on:not(.avatar-live) .character-rim {
+  animation: rim-pulse 6s ease-in-out 2.2s infinite;
+}
+
+@keyframes portrait-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+
+@keyframes rim-pulse {
+  0%, 100% { scale: 1; }
+  50% { scale: 1.07; }
+}
+
+/* Desktop: frame the photo like the live avatar (stage.js CAMERA: hair top at 15% of the
+   height, hair-to-chin 38%), using the bust's measured landmarks (headTop 0.0399,
+   chin 0.3749, head pivot u 0.5102): height = 0.38 / 0.335 = 113.4%,
+   top = 15% - 0.0399 * 113.4% = 10.5% (11% here: the idle float lifts it up to 10px),
+   centred on the head pivot like the live camera.
+   The bottom edge sits at image v ~0.81; like the live shading, the bust fades out from the
+   chest (v ~0.52) to v ~0.74, so it reads as a bust cut at the chest. */
+@media screen and (min-width: 1025px) {
+  .avatar-fallback {
+    top: 11%;
+    height: 113.4%;
+    transform: translateX(-51.02%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 74%);
+    mask-image: linear-gradient(to bottom, #000 52%, transparent 74%);
+  }
+  /* The photo has no dark body below it to hide the glow's centre (the live avatar does),
+     so the static glow is softer; the hero choreography fades it out with --rim-scroll. */
+  html:not(.avatar-live) .character-rim {
+    filter: blur(50px) opacity(calc(0.75 * var(--rim-scroll, 1)));
+  }
+}
+
+/* Avatar still (glb and character modes): rendered from the live 3D avatar with the hero camera
+   (review/v2-assets/make_character_stills.py prints these numbers): the image starts 17.78% down
+   the hero (its hair top at ~20%), 88.89% tall (it runs past the bottom edge, so the float never
+   shows its end), centred like the live camera. Tablets use the same framing. */
+@media screen and (min-width: 769px) {
+  .avatar-layer[data-avatar-mode="character"] .avatar-fallback {
+    top: 17.78%;
+    height: 88.89%;
+    transform: translateX(-50%);
+    /* soft end, seen only when the scroll story shrinks the still */
+    -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 99%);
+    mask-image: linear-gradient(to bottom, #000 78%, transparent 99%);
+  }
+}
+
+/* Tablets: the name sits top-left over the hero, so the head starts a little lower. */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .avatar-layer[data-avatar-mode="character"] .avatar-fallback {
+    top: 26%;
+    height: 80%;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  html.choreo-live .avatar-layer {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: var(--z-avatar);
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .avatar-fallback { top: 15%; height: 110%; }
+  .avatar-layer::after { height: 40%; }
+}
+
+/* Landscape phones (769..1024 wide, at most 500 tall): too short for text over the portrait,
+   so the text takes a left column and the portrait moves to the right. */
+@media screen and (min-width: 769px) and (max-width: 1024px) and (max-height: 500px) {
+  .landing-intro { top: 84px; }
+  .landing-info {
+    left: 0;
+    right: auto;
+    transform: none;
+    bottom: 32px;
+    text-align: left;
+    text-shadow: none;
+  }
+  .landing-info .role-line { justify-items: start; }
+  .role-article { font-size: 18px; }
+  .role-accent { font-size: 40px; }
+  .role-rest { font-size: 32px; }
+  .avatar-fallback,
+  .avatar-layer[data-avatar-mode="character"] .avatar-fallback {
+    top: 10%;
+    height: 105%;
+    left: auto;
+    right: 3%;
+    transform: none;
+  }
+  html:not(.avatar-live) .character-rim { left: 78%; }
+}
+
+/* From 900px the fixed social column shows at the left edge: keep the text clear of it. */
+@media screen and (min-width: 900px) and (max-width: 1024px) and (max-height: 500px) {
+  .landing-intro,
+  .landing-info { left: 72px; }
+}
+
+/* Phones: a head-and-chest bust under the text (the desktop look, smaller): the box is wider
+   than the photo's aspect, so "cover" keeps the full width and shows the top 62% (to mid-chest). */
+@media only screen and (max-width: 768px) {
+  .avatar-layer {
+    position: relative;
+    inset: auto;
+    overflow: visible;
+    width: min(86vw, 400px);
+    margin: 32px auto 0;
+  }
+  .avatar-layer::after { display: none; }
+  .avatar-fallback {
+    position: relative;
+    left: auto;
+    top: auto;
+    bottom: auto;
+    transform: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1.31;
+    object-fit: cover;
+    object-position: 50% 0;
+    -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 98%);
+    mask-image: linear-gradient(to bottom, #000 70%, transparent 98%);
+  }
+  .character-rim,
+  html:not(.avatar-live) .character-rim {
+    width: 110%;
+    height: auto;
+    aspect-ratio: 1;
+    top: 55%;
+    filter: blur(42px);
+    transform: translate(-50%, -30%) scale(0.9);
+  }
+  html.lights-on:not(.avatar-live) .character-rim {
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.7;
+  }
+  /* The avatar still is tall (head to lap): a square box shows its top 72% (head, collar and
+     upper chest) and fades out above the lap, instead of a floating head. */
+  .avatar-layer[data-avatar-mode="character"] .avatar-fallback {
+    aspect-ratio: 1;
+    -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 97%);
+    mask-image: linear-gradient(to bottom, #000 72%, transparent 97%);
+  }
+  /* The character: a softer glow sitting low, behind the shoulders (as on desktop), not a
+     saturated disc behind the whole head. */
+  .avatar-layer[data-avatar-mode="character"] .character-rim { top: 64%; }
+  html.lights-on:not(.avatar-live) .avatar-layer[data-avatar-mode="character"] .character-rim { opacity: 0.35; }
+}
+
+/* ---------- Compact live story (phones and tablets held upright, html.choreo-compact) ----------
+   The live avatar's canvas is fixed behind the page (like desktop) and the camera composes each
+   step (avatar/choreography-compact.js): the name at the top, his bust in the middle, the role
+   below it over the floor fade. Without the live avatar the plain layout above stays. */
+@media screen and (max-width: 1024px) {
+  html.choreo-compact .avatar-layer {
+    position: fixed;
+    inset: 0 auto auto 0;
+    width: 100%;
+    height: 100vh;
+    height: 100lvh; /* the toolbar collapsing must not resize the WebGL canvas */
+    margin: 0;
+    overflow: hidden;
+    z-index: var(--z-avatar);
+  }
+  html.choreo-compact .landing-section {
+    height: var(--vh);
+    min-height: 0;
+    max-width: none;
+    padding: 0;
+    display: block;
+  }
+  html.choreo-compact .landing-container {
+    position: relative;
+    z-index: calc(var(--z-avatar) + 1);
+    width: var(--cWidth);
+    height: 100%;
+    margin: 0 auto;
+    display: block;
+  }
+  html.choreo-compact .landing-intro,
+  html.choreo-compact .landing-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: auto;
+    margin: 0;
+    transform: none;
+    text-align: center;
+    text-shadow: 0 1px 8px var(--bg);
+  }
+  html.choreo-compact .landing-intro { top: 15%; }
+  html.choreo-compact .landing-info { top: auto; bottom: max(7%, 44px); }
+  html.choreo-compact .landing-info .role-line { justify-items: center; }
+  /* the floor fade: his lap and hands recede under the role (and later the About text) */
+  html.choreo-compact.avatar-live .avatar-layer::after {
+    display: block;
+    height: var(--floor-h, 40%);
+    opacity: var(--scene-fade, 1);
+    background-image: linear-gradient(to bottom, transparent, var(--bg) 32%);
+  }
+  /* (beats the phone still's .avatar-layer[data-avatar-mode] .character-rim rules) */
+  html.choreo-compact .avatar-layer[data-avatar-mode] .character-rim {
+    width: 320px;
+    height: 320px;
+    top: 22%;
+    filter: blur(50px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.avatar-live) .avatar-fallback,
+  html.lights-on:not(.avatar-live) .avatar-fallback,
+  html.lights-on:not(.avatar-live) .character-rim { animation: none; transition: none; }
+}
+
+html.reduced-motion:not(.avatar-live) .avatar-fallback,
+html.reduced-motion.lights-on:not(.avatar-live) .avatar-fallback,
+html.reduced-motion.lights-on:not(.avatar-live) .character-rim { animation: none; transition: none; }

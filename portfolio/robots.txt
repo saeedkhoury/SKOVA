@@ -1,0 +1,5 @@
+# SKOVA (https://skova.dev): everything here is public and may be indexed.
+User-agent: *
+Allow: /
+
+Sitemap: https://skova.dev/sitemap.xml

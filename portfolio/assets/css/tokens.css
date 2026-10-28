@@ -1,0 +1,43 @@
+/* Design tokens. Values verified against the reference (see review/v2-spec.md, section 1). */
+:root {
+  --bg: #0b080c;
+  --text: #eae5ec;
+  --accent: #c2a4ff;
+  --accent-role: #c481ff;
+  --accent-timeline: #aa42ff;
+  --accent-hover: #d4b8ff;
+  --loader-bg: #eae5ec;
+  --loader-pill: #000;
+  --loader-blob: #a87cff;
+  --cursor: #e6c3ff;
+  --cursor-glow: #af83ff;
+  --glow-pink: #fb8dff;
+  --glow-rim: #f59bf8;
+  --muted: #adacac;
+  --dim: #5e5e5e;
+  --line: #363636;
+
+  --font: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --cWidth: calc(100% - 30px);
+  --cMaxWidth: 1920px;
+  --vh: 100vh;
+
+  --z-avatar: 11;
+  --z-whatido: 12;
+  --z-navfade: 12;
+  --z-glow-top: 15;
+  --z-icons: 99;
+  --z-header: 9999;
+  --z-cursor: 98; /* under the social column (99), like the reference, so icons sit on the pill */
+  --z-loader: 999999;
+  --z-skip: 2147483000;
+}
+
+@supports (height: 100svh) {
+  :root { --vh: 100svh; }
+}
+
+@media (min-width: 768px) {
+  :root { --cWidth: 94%; }
+}

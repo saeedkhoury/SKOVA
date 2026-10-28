@@ -1,0 +1,14 @@
+# Kept on this computer only, never published: personal photos, AI source images, QA records,
+# the old v1 site, research notes and the website skill.
+/review/
+/site/
+/design-package.md
+/10k-websites/
+
+# OS and tooling junk
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+.vercel/
+.wrangler/

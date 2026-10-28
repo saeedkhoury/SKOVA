@@ -1,0 +1,10 @@
+// www.skova.dev -> https://skova.dev (301, path and query kept).
+// Deploy from the SKOVA folder:  npx wrangler@4.147.0 deploy --config cloudflare/www-redirect/wrangler.jsonc
+{
+  "name": "skova-www",
+  "main": "index.js",
+  "compatibility_date": "2026-10-01",
+  "routes": [{ "pattern": "www.skova.dev", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false
+}
