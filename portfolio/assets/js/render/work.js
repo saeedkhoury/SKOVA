@@ -4,7 +4,7 @@
  */
 import { el, fill } from '../util/dom.js';
 import { arrowIcon } from '../util/icons.js';
-import { externalAttrs, linkAttrs } from './shared.js';
+import { externalAttrs, isCodeLink, linkAttrs } from './shared.js';
 import { titleCard } from './title-card.js';
 
 const DEFAULT_RATIO = 1.6; // used only when a work item has no width/height
@@ -40,10 +40,16 @@ function workImage(item, frame) {
   return img;
 }
 
+/** Accessible name of the picture link: code on github.com, a demo project, or a live site. */
+function linkLabel(item) {
+  if (isCodeLink(item.link)) return `View the ${item.title} code`;
+  return item.demo ? `View the ${item.title} demo` : `Visit ${item.title}`;
+}
+
 function workMedia(item) {
   const ratio = item.image ? imageSize(item).ratio : DEFAULT_RATIO;
   const frame = item.link
-    ? el('a', { className: 'work-image-in', attrs: { ...externalAttrs(item.link, `Visit ${item.title}`), 'data-cursor': 'disable' } }, [
+    ? el('a', { className: 'work-image-in', attrs: { ...externalAttrs(item.link, linkLabel(item)), 'data-cursor': 'disable' } }, [
       el('span', { className: 'work-link', attrs: { 'aria-hidden': 'true' } }, [arrowIcon()]),
     ])
     : el('div', { className: 'work-image-in' });

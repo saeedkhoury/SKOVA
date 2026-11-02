@@ -96,22 +96,22 @@ const config = {
         text: 'My first live client site, in Hebrew, Arabic, and English. Since launch week, every deploy waits for 10 automated checks, from type checks to browser tests in all three languages.',
       },
       {
-        role: 'Websites for local businesses',
+        role: 'Demo project',
         org: 'YA Group, travel and personal services',
         when: '2026',
-        text: 'A Hebrew and Arabic site with a full-screen film from the owner\'s office that plays as you scroll, live on Vercel.',
+        text: 'A demo site in Hebrew and Arabic with a full-screen film from the owner\'s office that plays as you scroll.',
       },
       {
-        role: 'Restaurant platform',
+        role: 'Demo project',
         org: 'Brinji, Kafr Yasif',
         when: '2026',
-        text: 'A website in three languages and a manager app for a bar and restaurant. The architecture is approved and the foundation is being built.',
+        text: 'A demo of a website in three languages and a manager app for a bar and restaurant, with sample content.',
       },
       {
-        role: 'Fuel station system',
+        role: 'Demo project',
         org: 'SMN, Station Management Network',
         when: '2025',
-        text: 'Customer, manager, and worker apps for a fuel station, in React and TypeScript.',
+        text: 'A demo of customer, manager, and worker apps for a fuel station, in React and TypeScript.',
       },
       {
         role: 'B.Sc. Software Engineering',
@@ -129,38 +129,43 @@ const config = {
   //   summary    the description on the All Works page; stack: its tech line
   //   card       the All Works picture (3 phone screens on a colour background, 1600 x 816)
   //   link       the live site, demo or code (null hides the link)
+  //   demo       true for a demo project (not a live client site): its link says "View demo"
+  //              (a github.com link still says "View code")
   work: [
     {
       title: 'YA Group',
-      category: 'Live client site · 2026',
+      category: 'Demo project · 2026',
+      demo: true,
       tools: 'HTML, CSS, and JavaScript on Vercel. Hebrew and Arabic pages for a travel and personal services business, a full-screen film from the owner\'s office that plays as you scroll, and a consultation form that prepares a WhatsApp message.',
-      summary: 'A Hebrew and Arabic website for a travel and personal services business. A full-screen film from the owner\'s office plays as you scroll, on computers and on phones, and the consultation form prepares a WhatsApp message instead of storing anything.',
+      summary: 'A demo website in Hebrew and Arabic for a travel and personal services business. A full-screen film from the owner\'s office plays as you scroll, on computers and on phones, and the consultation form prepares a WhatsApp message instead of storing anything.',
       stack: 'HTML, CSS, JavaScript, Vercel',
       image: 'assets/img/work/ya-group.jpg',
       width: 1600, // image size in pixels (prevents layout shift)
       height: 1000,
       card: 'assets/img/works/ya-group.jpg',
-      alt: 'Home page of the YA Group website in Hebrew',
+      alt: 'Home page of the YA Group demo website in Hebrew',
       link: 'https://ya-group-wheat.vercel.app/',
     },
     {
       title: 'Sky Phone',
-      category: 'Preview for a local shop · 2026',
+      category: 'Demo project · 2026',
+      demo: true,
       tools: 'Built twice: plain HTML, CSS, and JavaScript, then Next.js with unit and end-to-end tests. Catalog, search, and a bag that sends the order to WhatsApp.',
-      summary: 'A storefront preview for a phone shop, built twice: first in plain HTML, CSS, and JavaScript, then in Next.js with unit and end-to-end tests. Browse the catalog, search it, and send the order from your bag to WhatsApp.',
+      summary: 'A storefront demo for a phone shop, built twice: first in plain HTML, CSS, and JavaScript, then in Next.js with unit and end-to-end tests. Browse the catalog, search it, and send the order from your bag to WhatsApp.',
       stack: 'Next.js, React, TypeScript, Vitest, Playwright',
       image: 'assets/img/work/sky-v2-desktop.jpg',
       width: 1600, // image size in pixels (prevents layout shift)
       height: 1000,
       card: 'assets/img/works/sky-phone.jpg',
-      alt: 'Sky Phone storefront preview, version 2',
+      alt: 'Sky Phone storefront demo, version 2',
       link: 'https://saeedkhoury.github.io/skyphone-ca/',
     },
     {
       title: 'Brinji',
-      category: 'Restaurant platform · demo · 2026',
+      category: 'Demo project · 2026',
+      demo: true,
       tools: 'Next.js, TypeScript, Cloudflare Workers. A website in Arabic, Hebrew, and English for a bar and restaurant in Kafr Yasif, with events, a menu, a gallery, and table requests, and a manager app for the staff. The live demo uses sample content.',
-      summary: 'A website for a bar and restaurant in Kafr Yasif, in Arabic, Hebrew, and English: events you can reserve for, a menu, a gallery, and a table request form, plus a first look at the manager app for the staff. The live demo uses sample content.',
+      summary: 'A demo website for a bar and restaurant in Kafr Yasif, in Arabic, Hebrew, and English: events you can reserve for, a menu, a gallery, and a table request form, plus a first look at the manager app for the staff, shown with sample content.',
       stack: 'Next.js, React, TypeScript, Zod, Cloudflare Workers',
       image: 'assets/img/work/brinji.jpg',
       width: 1600, // image size in pixels (prevents layout shift)
@@ -184,22 +189,24 @@ const config = {
     },
     {
       title: 'Khoury Law Office',
-      category: 'Live · early site',
+      category: 'Demo project · early site',
+      demo: true,
       tools: 'HTML, CSS, and JavaScript. Hebrew, Arabic, and English, an accessibility panel, and a contact form that prepares a WhatsApp message to the office.',
-      summary: 'An early website for a law office, in Hebrew, Arabic, and English, with an accessibility panel and a contact form that prepares a WhatsApp message to the office.',
+      summary: 'An early demo website for a law office, in Hebrew, Arabic, and English, with an accessibility panel and a contact form that prepares a WhatsApp message to the office.',
       stack: 'HTML, CSS, JavaScript',
       image: 'assets/img/work/law-desktop.jpg',
       width: 1600, // image size in pixels (prevents layout shift)
       height: 1000,
       card: 'assets/img/works/khoury-law.jpg',
-      alt: 'Home page of the Khoury Law Office website',
+      alt: 'Home page of the Khoury Law Office demo website',
       link: 'https://saeedkhoury.github.io/khoury-law-firm/',
     },
     {
       title: 'SMN',
-      category: 'Station Management Network · 2025',
-      tools: 'React, TypeScript, Vite, Tailwind. Three apps for a fuel station: customers (cars, refueling, receipts), the manager (fuel tanks, prices, workers, reports), and workers (shifts and problem reports). A front-end prototype, designed around license plate recognition.',
-      summary: 'Three apps for a fuel station. Customers manage their cars, start refueling, and keep their receipts; the manager follows fuel tanks, prices, workers, and reports; workers see their shifts and report problems. A front-end prototype, designed around license plate recognition.',
+      category: 'Demo project · 2025',
+      demo: true,
+      tools: 'React, TypeScript, Vite, Tailwind. Station Management Network, three apps for a fuel station: customers (cars, refueling, receipts), the manager (fuel tanks, prices, workers, reports), and workers (shifts and problem reports). A front-end prototype, designed around license plate recognition.',
+      summary: 'Station Management Network: three apps for a fuel station. Customers manage their cars, start refueling, and keep their receipts; the manager follows fuel tanks, prices, workers, and reports; workers see their shifts and report problems. A front-end prototype, designed around license plate recognition.',
       stack: 'React, TypeScript, Vite, Tailwind',
       image: 'assets/img/work/smn.jpg',
       width: 1600, // image size in pixels (prevents layout shift)
@@ -225,8 +232,9 @@ const config = {
     titleEnd: 'Works',
     text: 'A collection of all my projects and creations.',
     view: 'Click to View', // shown over a picture on hover; the picture opens full size
-    visit: 'Visit site', // link label (code links on github.com say "View code")
+    visit: 'Visit site', // link label (code links on github.com say "View code", demo projects "View demo")
     code: 'View code',
+    demo: 'View demo',
   },
 
   // Tech stack pyramid: one array per row, widest row first.
@@ -281,7 +289,6 @@ const config = {
   contact: {
     note: 'Hiring an intern, or need a website for your business? On a phone, WhatsApp is fastest.',
     credit: 'Designed and Developed by',
-    builtWith: 'Built with Claude Code in plain HTML, CSS, and JavaScript, with three.js and GSAP.',
   },
 
   /**

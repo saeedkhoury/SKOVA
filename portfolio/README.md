@@ -42,7 +42,9 @@ project in `work`, in the same order, numbered 01, 02, ... automatically.
 
 - Where its content comes from: each card shows the project's `card` picture, `title`, `category`,
   `summary` (the description) and `stack` (the tools line), then a link to `link` in a new tab. The
-  link says "Visit site", or "View code" when it goes to github.com. The page's own texts (the back
+  link says "Visit site", "View code" when it goes to github.com, or "View demo" for a project
+  marked `demo: true` (every project except the live client site; a github.com link still says
+  "View code"). The page's own texts (the back
   button, the title, the line under it, "Click to View") are in `worksPage`. The footer uses
   `brand.name`, `contact.credit` and your name. Nothing about a project is written in the HTML,
   except the plain list for browsers without JavaScript (the `<noscript>` block in `works.html`):

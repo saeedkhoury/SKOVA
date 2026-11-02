@@ -140,7 +140,6 @@ export function renderContact(section, config, fullName, brandName = '') {
         el('div', { className: 'contact-box contact-credit' }, [
           el('p', { className: 'credit' }, [`${contact.credit || ''} `, el('span', { text: fullName })]),
           el('p', { className: 'credit-year', text: `© ${new Date().getFullYear()} ${brandName}`.trim() }),
-          contact.builtWith ? el('p', { className: 'credit-built', text: contact.builtWith }) : null,
         ]),
       ]),
     ]),

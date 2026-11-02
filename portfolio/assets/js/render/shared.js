@@ -38,6 +38,18 @@ export function isExternal(href) {
   return /^https?:\/\//i.test(String(href || ''));
 }
 
+/** Links to these hosts are code, not a live site ("View code" instead of "Visit site"). */
+const CODE_HOSTS = new Set(['github.com', 'www.github.com']);
+
+/** True for a link to source code (github.com) rather than a running site. */
+export function isCodeLink(href) {
+  try {
+    return CODE_HOSTS.has(new URL(href).hostname);
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Attributes for a link from config: another site opens in a new tab, anything else
  * (a page of this site such as works.html, mailto:) opens in the same tab.

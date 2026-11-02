@@ -7,7 +7,7 @@
  */
 import { el, fill } from '../util/dom.js';
 import { arrowIcon, searchIcon } from '../util/icons.js';
-import { externalAttrs, fullNameOf, isExternal } from './shared.js';
+import { externalAttrs, fullNameOf, isCodeLink, isExternal } from './shared.js';
 import { brandOf } from './brand.js';
 import { titleCard } from './title-card.js';
 
@@ -17,8 +17,6 @@ export const CARD_SIZE = Object.freeze({ width: 1600, height: 816 });
 const HOME_HREF = './';
 /** Columns per viewport width, as in works.css. Pictures in the first row load at once, the rest lazily. */
 const COLUMNS = Object.freeze([{ minWidth: 1081, count: 3 }, { minWidth: 641, count: 2 }]);
-/** Links to these hosts are code, not a live site ("View code" instead of "Visit site"). */
-const CODE_HOSTS = new Set(['github.com', 'www.github.com']);
 /** Used only for keys missing from config.worksPage. */
 const DEFAULT_TEXTS = Object.freeze({
   back: 'Back to Home',
@@ -28,20 +26,13 @@ const DEFAULT_TEXTS = Object.freeze({
   view: 'Click to View',
   visit: 'Visit site',
   code: 'View code',
+  demo: 'View demo',
 });
 
 function firstRowCount() {
   const width = window.innerWidth || document.documentElement.clientWidth || 0;
   const match = COLUMNS.find(({ minWidth }) => width >= minWidth);
   return match ? match.count : 1;
-}
-
-function isCodeLink(href) {
-  try {
-    return CODE_HOSTS.has(new URL(href).hostname);
-  } catch {
-    return false;
-  }
 }
 
 function header(texts) {
@@ -93,10 +84,16 @@ function picture(item, index, ctx) {
   return button;
 }
 
+/** "View code" for github.com, "View demo" for a demo project, otherwise "Visit site". */
+function linkLabel(item, texts) {
+  if (isCodeLink(item.link)) return texts.code;
+  return item.demo ? texts.demo : texts.visit;
+}
+
 function visitLink(item, texts) {
   if (!isExternal(item.link)) return null;
   return el('a', { className: 'works-visit', attrs: externalAttrs(item.link) }, [
-    isCodeLink(item.link) ? texts.code : texts.visit,
+    linkLabel(item, texts),
     el('span', { className: 'sr-only', text: ` (${item.title}, opens in a new tab)` }),
     arrowIcon(),
   ]);

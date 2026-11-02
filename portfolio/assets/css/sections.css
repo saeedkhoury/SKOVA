@@ -470,15 +470,6 @@ a.contact-social:hover { border-color: var(--accent); }
   margin: 20px 0 10px;
 }
 
-.contact-credit .credit-built {
-  font-size: 12px;
-  font-weight: 300;
-  line-height: 1.5;
-  opacity: 0.45;
-  max-width: 22em;
-  margin: 0;
-}
-
 @media only screen and (min-width: 600px) {
   .contact-section h2 { font-size: 40px; }
   .contact-credit .credit,
