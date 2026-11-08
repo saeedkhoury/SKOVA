@@ -180,10 +180,10 @@ const config = {
       tools: 'Astro, TypeScript, Zod, Playwright, GitHub Actions, Cloudflare Workers. Hebrew, Arabic, and English pages, WhatsApp appointment requests, and 10 checks before every deploy.',
       summary: 'The website of a dental clinic in Jadeidi-Makr, in Hebrew, Arabic, and English, with WhatsApp appointment requests. My first live client site: since launch week, every deploy waits for 10 automated checks, from type checks to browser tests in all three languages.',
       stack: 'Astro, TypeScript, Tailwind, Zod, Playwright, GitHub Actions, Cloudflare Workers',
-      image: 'assets/img/work/clinic-en.jpg',
+      image: 'assets/img/work/clinic-en.jpg?v=2',
       width: 1600, // image size in pixels (prevents layout shift)
       height: 1000,
-      card: 'assets/img/works/dr-khalil-kanani.jpg',
+      card: 'assets/img/works/dr-khalil-kanani.jpg?v=2',
       alt: 'Home page of the Dr. Khalil Kanani dental clinic website in English',
       link: 'https://www.drkhalilkanani.com/',
     },
