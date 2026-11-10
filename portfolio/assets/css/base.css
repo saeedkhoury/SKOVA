@@ -194,6 +194,21 @@ main:focus {
 
 .back-to-top:hover { color: var(--text); }
 
+.footer-privacy {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--dim);
+  transition: color 0.3s;
+}
+
+.footer-privacy:hover,
+.footer-privacy:focus-visible { color: var(--text); }
+
 /* ---------- Plain fallback (no JS, or the page script failed) ---------- */
 .nojs {
   max-width: 640px;

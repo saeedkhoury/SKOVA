@@ -1,0 +1,23 @@
+# SKOVA
+
+> SKOVA (skova.dev) is the portfolio of Saeed Khoury, a software developer and AI engineer and a fourth-year Software Engineering student at Kinneret Academic College, from Kafr Kanna, Israel. He builds websites and software with AI tools and checks what they write. Sites are built in Arabic, Hebrew, and English, including right-to-left layouts, with fast mobile pages and WhatsApp booking buttons.
+
+Only the Dr. Khalil Kanani clinic site is a live client project. The other projects listed on the site are demos.
+
+## Pages
+
+- [Home](https://skova.dev/): who Saeed is, what he does, career, selected work, tech stack, and contact
+- [All works](https://skova.dev/works): every project with a picture, category, summary, and tools used
+- [Privacy policy](https://skova.dev/privacy): what the site collects (nothing beyond what you choose to send by email or WhatsApp)
+
+## Contact
+
+- Email: saed.khoury10@gmail.com
+- WhatsApp: https://wa.me/972505854855
+- LinkedIn: https://www.linkedin.com/in/saeed-khoury-a5a119359/
+- GitHub: https://github.com/saeedkhoury
+- CV (PDF): https://skova.dev/assets/Saeed_Khoury_CV.pdf
+
+## Live client site
+
+- [Dr. Khalil Kanani clinic](https://drkhalilkanani.com): multilingual (English, Hebrew, Arabic) clinic website

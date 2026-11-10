@@ -125,6 +125,7 @@ function renderFooter(footer, config, brandName, fullName) {
   fill(footer, [
     el('p', { className: 'works-footer-year', text: `© ${new Date().getFullYear()} ${brandName}`.trim() }),
     credit && fullName ? el('p', { className: 'works-footer-credit' }, [`${credit} `, el('span', { text: fullName })]) : null,
+    el('a', { className: 'footer-privacy', text: 'Privacy policy', attrs: { href: '/privacy' } }),
   ]);
 }
 

@@ -150,5 +150,6 @@ export function renderFooter(footer) {
   if (!footer) return;
   fill(footer, [
     el('a', { className: 'back-to-top', attrs: { href: '#home', 'data-nav': '', 'data-cursor': 'disable' } }, ['Back to top', arrowIcon()]),
+    el('a', { className: 'footer-privacy', text: 'Privacy policy', attrs: { href: '/privacy' } }),
   ]);
 }
